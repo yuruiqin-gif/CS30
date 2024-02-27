@@ -11,8 +11,8 @@ function setup() {
 }
 
 let state = 0;
-let x = 80;
-let y = 100;
+let x = 0;
+let y = 0;
 let z = 25;
 let speed = 10;
 
