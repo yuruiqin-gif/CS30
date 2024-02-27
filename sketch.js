@@ -7,12 +7,12 @@
 
 
 function setup() {
-  createCanvas(378, 378);
+  createCanvas(410, 410);
 }
 
 let state = 0;
-let x = 0;
-let y = 0;
+let x = 80;
+let y = 100;
 let z = 25;
 let speed = 10;
 
@@ -36,17 +36,17 @@ function draw() {
   }
 
   if (state === 2){
-    if (x <= 0){
+    if (x <= 10){
       state = 3;
-      x = 0;
+      x = 10;
     }
     x -= speed
   }
 
   if (state === 3){
-    if (y <= 0){
+    if (y <= 10){
       state = 0;
-      y = 0;
+      y = 10;
     }
     y -= speed
   }
