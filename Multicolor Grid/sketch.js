@@ -23,3 +23,18 @@ function grid(){
     }
   }
 }
+
+
+function mousePressed() {
+  if (mouseButton === RIGHT) {
+    squareSize += 50;
+  }
+  if (mouseButton === LEFT) {
+    squareSize -= 5;
+
+    if (squareSize <= 5){
+      squareSize = 5;
+    }
+    
+  }
+}
