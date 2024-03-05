@@ -1,9 +1,7 @@
-// Project Title
-// Your Name
-// Date
+// Multicolour Grid
+// Yurui Qin
+// May 5, 2025
 //
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
 
 let squareSize = 25;
 
