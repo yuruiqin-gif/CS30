@@ -21,7 +21,7 @@ function segmentline(){
     let greyValue = random(0,255);
 
     //option 2: perlin noise()
-    greyValue = noise(greyTime);
+    greyValue = noise(greyTime);p
     greyValue = map(greyValue,0,1,0,255);
     greyTime += 0.1;
 

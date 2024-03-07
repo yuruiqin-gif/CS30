@@ -7,11 +7,11 @@ let squareSize = 25;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  grid();
+  noLoop();
 }
 
 function draw() {
-  
+  grid();
 }
 
 function grid(){
@@ -28,6 +28,10 @@ function grid(){
 function mousePressed() {
   if (mouseButton === RIGHT) {
     squareSize += 50;
+
+    if (squareSize >= 100){
+      squareSize = 100;
+    }
   }
   if (mouseButton === LEFT) {
     squareSize -= 5;
@@ -36,5 +40,11 @@ function mousePressed() {
       squareSize = 5;
     }
     
+  }
+}
+
+function keyPressed(){
+  if (keyCode == 65){ // A key to make speed faster
+    grid();
   }
 }

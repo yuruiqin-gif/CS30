@@ -67,6 +67,6 @@ function mouseReleased(){
 }
 
 function draw() {
-  background(220);
+  background(150);
   drawRectangle();
 }
