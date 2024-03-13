@@ -1,7 +1,7 @@
 // Multicolour Grid
 // Yurui Qin
 // CS30
-// March 12, 2025
+// March 12, 2024
 // To draw a coloured grid affected by mouse and keyboard input
 
 let squareSize = 25; //Starting size of the square
