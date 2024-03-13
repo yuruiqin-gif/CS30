@@ -1,7 +1,8 @@
 // Multicolour Grid
 // Yurui Qin
+// CS30
 // March 12, 2025
-//To draw a coloured grid affected by mouse input
+// To draw a coloured grid affected by mouse and keyboard input
 
 let squareSize = 25; //Starting size of the square
 
@@ -16,8 +17,8 @@ function draw() {
 }
 
 function grid(){ 
-  for (let x = 0; x < width; x += squareSize) { //draws a grid that fits in frame
-    for (let y = 0; y < height; y += squareSize) {
+  for (let x = 0; x < width - squareSize; x += squareSize) { //draws a grid that fits in frame
+    for (let y = 0; y < height - squareSize; y += squareSize) {
       stroke(0);
       square(x,y,squareSize); //draws a square
       fill(random(250),random(50),random(100)); //semi-randomly fills the square with different colour
@@ -38,9 +39,9 @@ function mousePressed() {
     squareSize -= 1;
   }
   if (squareSize <= 10){ //To avoid program crashing, if the squares are too small it will not decrease any more
-    squareSize = 510;
+    squareSize = 10;
   }
-  clear(); //Draws the current grid and removes previous grids
+  clear(); //Draws the current grid and allows all squares to be in frame
   grid();
 }
 
