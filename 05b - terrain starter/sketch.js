@@ -1,50 +1,58 @@
 // Terrain Generation Starter
 // Yurui Qin
-// March 11, 2024
+// March 13, 2024
 // Precedurally Generated 2D Terrain
 
-let rectWidth = 5;
+let rectWidth = 0.5;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(255);
   rectMode(CENTER); //CHANGE THIS
+  drawRectangles();
 }
 
 function drawRectangles(){
-  //using a single loop, generate a bunch of side-to-side
-  //rectangles of varying height (pattern, random, noise)
+
   let rectHeight;
-  // let rectSize;
+  let mountLine = 0;
+
+  let rectHeight2;
   fill(0);
   for(let x = 0; x < width; x += rectWidth){
-    //Option 1 - pattern
-    rectHeight = x;
 
-    //Option 2 - random()
-    rectHeight = random(0, height*0.8);
-    rect(x, height/2, rectWidth, rectHeight);
+    rectHeight = noise(mountLine);
+    rectHeight2 = map(rectHeight,0,1,0,255);
 
-
-
-    // rectHeight = 100 * noise(0.1*frameCount);
-    // rectY = 100 * noise(0.1*frameCount);
-    // rectSize = 100 * noise(0.1*frameCount);
-    // rect(x, height/2, rectWidth, rectHeight);
-
-    // rectHeight = random(0, height*0.8);
-    // rectY = 100 * noise(100*frameCount);
-    // rectSize = 100 * noise(100*frameCount);
-    // rect(x, 200, rectWidth, rectHeight);
-
-
-
-    /////
-    
+    rect(x, height/2, rectWidth, rectHeight2);
+    mountLine += 0.01;
   }
   
 }
 
 function draw() {
+  drawRectangles();
+}
+
+function drawFlag(x,y){
+
+}
+
+function keyPressed(){
+  if (keyCode === LEFT_ARROW){
+    rectWidth -= 0.01;
+  }
+  if (rectWidth <= 0.1){
+    rectWidth = 0.1;
+  }
+
+  if (keyCode === RIGHT_ARROW){
+    rectWidth += 0.01;
+  }
+  if (rectWidth >= 20){
+    rectWidth = 20;
+  }
+
+  clear();
   drawRectangles();
 }
