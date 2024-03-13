@@ -14,13 +14,6 @@ function setup() {
 function draw() {
 
 }
-function fitter(){
-  if (squareSize*squareSize*width < width){
-    clear();
-  }
-  
-}
-
 
 function grid(){
   for (let x = 0; x < width; x += squareSize) {
@@ -34,25 +27,23 @@ function grid(){
 
 
 function mousePressed() {
-  grid();
   if (mouseButton === RIGHT) {
-    squareSize = squareSize + 10;
+    squareSize += 5;
   }
-  if (squareSize >= 100){
-    squareSize = 100;
+  if (squareSize >= 500){
+    squareSize = 500;
   }
 
   if (mouseButton === LEFT) {
-    squareSize -= 5;
+    squareSize -= 1;
   }
-  if (squareSize <= 5){
-    squareSize = 5;
+  if (squareSize <= 10){
+    squareSize = 510;
   }
-  
+  clear();
+  grid();
 }
 
 function keyPressed(){
-  if (keyCode == 65){ // A key to make speed faster
     grid();
-  }
 }
