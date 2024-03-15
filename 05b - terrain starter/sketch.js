@@ -4,6 +4,8 @@
 // Precedurally Generated 2D Terrain
 
 let rectWidth = 0.5;
+let highPointX;
+let highPointY;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -26,16 +28,31 @@ function drawRectangles(){
 
     rect(x, height/2, rectWidth, rectHeight2);
     mountLine += 0.01;
+
+    // highPointX = x;
+    // highPointY = rectHeight2;
+
+    // if(x > highPointX){
+    //   highPointX = x
+    // }
+
+    // if(rectHeight2 > highPointY){
+    //   highPointY = rectHeight2
+    // }
+
+    // drawFlag(highPointX,highPointY);
   }
-  
 }
 
 function draw() {
   drawRectangles();
+  drawFlag(100,50);
 }
 
 function drawFlag(x,y){
-
+  line(x,y,x,y-10);
+  fill(255,0,0);
+  triangle(x,y-10,x,y-20,x+20,y-10);
 }
 
 function keyPressed(){
