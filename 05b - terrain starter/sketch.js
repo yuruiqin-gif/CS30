@@ -17,7 +17,8 @@ function setup() {
 function drawRectangles(){
 
   let rectHeight;
-  let mountLine = 0;
+  let 
+  let mountLine = 0; //time
 
   let rectHeight2;
   fill(0);
@@ -29,24 +30,14 @@ function drawRectangles(){
     rect(x, height/2, rectWidth, rectHeight2);
     mountLine += 0.01;
 
-    // highPointX = x;
-    // highPointY = rectHeight2;
-
-    // if(x > highPointX){
-    //   highPointX = x
-    // }
-
-    // if(rectHeight2 > highPointY){
-    //   highPointY = rectHeight2
-    // }
-
-    // drawFlag(highPointX,highPointY);
+    //finding the highest peak
+    if()
   }
 }
 
 function draw() {
   drawRectangles();
-  drawFlag(100,50);
+  // drawFlag(100,50);
 }
 
 function drawFlag(x,y){
