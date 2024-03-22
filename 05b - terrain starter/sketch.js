@@ -7,36 +7,42 @@ let rectWidth = 0.5;
 let highPointX;
 let highPointY;
 
+let mountHeight = [];
+let rectHeight;
+let highestPoint;
+let mountLine = 0; //time
+let rectHeight2;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(255);
   rectMode(CENTER); //CHANGE THIS
   drawRectangles();
+  drawFlag(highestPoint,rectWidth);
 }
 
 function drawRectangles(){
-
-  let rectHeight;
-  let 
-  let mountLine = 0; //time
-
-  let rectHeight2;
+  
+  //finding the highest peak
+  // if(mountHeight[x] >= mountHeight[x-1]){
+  //   highestPoint = mountHeight[x];
+  //   print(highestPoint);
+  // }
+  
   fill(0);
   for(let x = 0; x < width; x += rectWidth){
-
+    mountHeight.push(x);
     rectHeight = noise(mountLine);
     rectHeight2 = map(rectHeight,0,1,0,255);
 
     rect(x, height/2, rectWidth, rectHeight2);
     mountLine += 0.01;
-
-    //finding the highest peak
-    if()
   }
 }
 
 function draw() {
-  drawRectangles();
+  // drawRectangles();
+  // drawFlag(highestPoint,rectWidth);
   // drawFlag(100,50);
 }
 
