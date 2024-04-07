@@ -7,14 +7,13 @@ let PerlinStart = 0;
 let Increment= 0.01;
 
 ///////////
-let rectWidth = 0.5;
-let highPointX;
-let highPointY;
-
+let rectWidth = 1;
 let mountLine = 0; //time
+
 let heightAvg = 0;
 let MountTotal = 0;
 let MountNum = 0;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(255);
@@ -36,7 +35,6 @@ function drawRectangles(){
   for(let x = 0; x < width; x++){
 
     y = map(noise(mountLine),0,1,0,height);
-    heightAvg+=y;
     //finding the highest peak
     if(y > tallPointY){
       tallPointY = y;
@@ -45,17 +43,19 @@ function drawRectangles(){
     MountTotal += y;
     MountNum++;
 
-    rect(x, height, 0, y*2);
+    rect(x, height, rectWidth, y*2);
     mountLine += Increment;
   }
   heightAvg = MountTotal/MountNum;
 
   drawFlag(tallPointX, height-tallPointY);
+  
+  PerlinStart += 0.01;
 
   stroke(255,0,0);
   line(0,heightAvg,windowWidth,heightAvg);
-  
-  PerlinStart += 0.01;
+
+  fill(0,0,0);
 }
 
 function draw() {
@@ -72,19 +72,13 @@ function drawFlag(x,y){
 
 function keyPressed(){
   if (keyCode === LEFT_ARROW){
-    mountLine -= 0.01;
+    rectWidth -= 1;
   }
-  if (mountLine <= 0.1){
-    mountLine = 0.1;
+  if (rectWidth <= 1){
+    rectWidth = 1;
   }
 
   if (keyCode === RIGHT_ARROW){
-    mountLine += 0.01;
+    rectWidth += 1;
   }
-  if (mountLine >= 20){
-    mountLine = 20;
-  }
-
-  clear();
-  drawRectangles();
 }
