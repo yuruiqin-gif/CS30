@@ -32,7 +32,7 @@ function generateTerrain(){
   MountTotal = 0; //Initializing the variables to find average height
   MountNum = 0; 
 
-  for(let x = 0; x < width; x++){
+  for(let x = 0; x < width; x+=rectWidth){
   
     y = map(noise(mountTime),0,1,0,height); //variable for height of the mountains
 
