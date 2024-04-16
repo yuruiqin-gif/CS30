@@ -14,5 +14,8 @@ function draw() {
 
 function drawRoad(){
   fill(0);
-  rect(0, windowHeight+50, windowWidth,windowHeight);
+  rect(0, windowHeight/4, windowWidth,windowHeight/2);
+  for(x = 0; x < windowWidth; x += 30){
+    rect(windowWidth/2, windowHeight/2,50,20);
+  }
 }
