@@ -1,14 +1,14 @@
 // Art Replication Warm-up
 // Yurui Qin
 // CS30
-// April 15, 2024
+// April 16, 2024
 // Replicating 1960s artwork “Computer Composition With Lines”
 
 rectList = []; //list for rectangle information
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  randomRect(400); //generates rectangle information for the list 400 times
+  randomRect(500); //generates rectangle information
 }
 
 function draw() {
@@ -26,7 +26,7 @@ function randomRect(n){
 
     //picks a random point from center of circle and angle
     let randomAngle = random(0,TWO_PI);
-    let equalDistribution = 10*sqrt(random(0, 200)); //square root function ensures equal distribution from circle center
+    let equalDistribution = 10*sqrt(random(0, 200)); //square root function allows for more equal distribution from circle center
 
     //random x and y coordinates
     let x = width/2 + equalDistribution * cos(randomAngle);
@@ -38,7 +38,4 @@ function randomRect(n){
 
     rectList.push([x,y,w,h]); //add new rectangle information to the list
   }
-  // fill(0);
-  // rect(random((width/2)-250,(width/2)+250),random((height/2)-250,(height/2)+250),random(0, 15),random(0,15));
-  // pop();
 }
