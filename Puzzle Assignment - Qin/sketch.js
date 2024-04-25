@@ -12,24 +12,24 @@ let gridData = [[0,0,0,0,0],
 
 
 function setup() {
+  document.addEventListener("contextmenu", event => event.preventDefault())
   // Determine the size of each square. Could use windowHeight,windowHeight  for Canvas to keep a square aspect ratio
   createCanvas(windowWidth, windowHeight);
   rectWidth = width/NUM_COLS;
   rectHeight = height/NUM_ROWS;
+  
 }
 
 function draw() {
   background(220);
   determineActiveSquare();   //figure out which tile the mouse cursor is over
-  drawGrid();                //render the current game board to the screen (and the overlay)
 
   //CHEATHER CHEATER
-  if(mouseButton === RIGHT){
-    if(keyCode === SHIFT){
-      determineActiveSquare();
+  if(mouseButton === RIGHT && keyCode === SHIFT){
+      flip(currentCol,currentRow);
       drawGrid();
-    }
   }
+  drawGrid();                //render the current game board to the screen (and the overlay)
 }
 
 
@@ -67,5 +67,24 @@ function drawGrid(){
       fill(gridData[y][x]);
       rect(x*rectWidth, y*rectHeight, rectWidth, rectHeight);
     }
+  }
+}
+
+function WinCondition(){
+  let zeroCounter = 0;
+  let twoFiveFiveCounter = 0;
+  for (let y = 0; y < 4; y++){
+    for (let x = 0; x < 5; x++){
+      if(x === 0){
+        zeroCounter+=1;
+      }
+      if(x === 255){
+        twoFiveFiveCounter+=1;
+      }
+    }
+  }
+
+  if(zeroCounter === 20 || twoFiveFiveCounter === 20){
+    print("You Win");
   }
 }
