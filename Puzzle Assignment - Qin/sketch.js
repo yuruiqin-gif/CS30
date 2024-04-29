@@ -23,13 +23,12 @@ function setup() {
 function draw() {
   background(220);
   determineActiveSquare();   //figure out which tile the mouse cursor is over
-
+  drawGrid();                //render the current game board to the screen (and the overlay)
   //CHEATHER CHEATER
   if(mouseButton === RIGHT && keyCode === SHIFT){
       flip(currentCol,currentRow);
       drawGrid();
   }
-  drawGrid();                //render the current game board to the screen (and the overlay)
 }
 
 
@@ -73,12 +72,12 @@ function drawGrid(){
 function WinCondition(){
   let zeroCounter = 0;
   let twoFiveFiveCounter = 0;
-  for (let y = 0; y < 4; y++){
-    for (let x = 0; x < 5; x++){
-      if(x === 0){
+  for (let y = 0; y < 5; y++){
+    for (let x = 0; x < 4; x++){
+      if(gridData[x][y] === 0){
         zeroCounter+=1;
       }
-      if(x === 255){
+      if(gridData[x][y] === 255){
         twoFiveFiveCounter+=1;
       }
     }
