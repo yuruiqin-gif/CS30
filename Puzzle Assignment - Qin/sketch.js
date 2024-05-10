@@ -27,7 +27,6 @@ function draw() {
   //CHEATHER CHEATER
   if(mouseButton === RIGHT && keyCode === SHIFT){
       flip(currentCol,currentRow);
-      drawGrid();
   }
 }
 
@@ -74,10 +73,10 @@ function WinCondition(){
   let twoFiveFiveCounter = 0;
   for (let y = 0; y < 5; y++){
     for (let x = 0; x < 4; x++){
-      if(gridData[x][y] === 0){
+      if(gridData[y][x] === 0){
         zeroCounter+=1;
       }
-      if(gridData[x][y] === 255){
+      if(gridData[y][x] === 255){
         twoFiveFiveCounter+=1;
       }
     }
