@@ -2,7 +2,8 @@
 // Yurui Qin
 // 2024, April 12
 //
-let vehicles =[];
+let lightTimer = 0;
+let lightState = 'green';
 
 let eastbound = [];
 let westbound = [];
@@ -16,17 +17,42 @@ function setup() {
   for (let i = 0; i <= 20; i++){
     westbound.push(new Vehicle(0, random(windowHeight/2,windowHeight/1.5),floor(random(0,2)),'green', 0, 3)); 
   }
+
+  trafficLight = new TrafficLight(width/2, height/8, 'green');
 }
 
 function draw() {
   background(255);
   drawRoad();
 
-  for(let e of eastbound){ //displaying vechicles
-    e.action();
+  if (lightState === 'amber' && frameCount >= lightTimer){
+    lightState = 'red';
+    trafficLight.state = 'red'
+    lightTimer = frameCount + 120;
   }
+  else if(lightState === 'red' && frameCount >= lightTimer){
+    lightState = 'green';
+    trafficLight.state = 'green';
+  }
+
+  trafficLight.display();
+
+  for(let e of eastbound){ //displaying vechicles
+    if(lightState === 'green'){
+      e.action();
+    }
+    else{
+      e.display();
+    }
+  }
+
   for(let w of westbound){ //displaying vechicles
-    w.action();
+    if(lightState === 'green'){
+      w.action(); 
+    }
+    else{
+      w.display();
+    }
   }
 }
 
@@ -50,6 +76,16 @@ function mousePressed(){
       eastbound.push(new Vehicle(mouseX, random(windowHeight/3.9,windowHeight/2.5),floor(random(0,2)),'green', 1, 3)); 
     }
   }
+}
+
+function keyPressed(){
+ if (key = ' '){
+  if(lightState === 'green'){
+    lightState = 'amber';
+    trafficLight.state = 'amber';
+    lightTimer = frameCount + 60;
+  }
+ }
 }
 
 class Vehicle{
@@ -167,5 +203,32 @@ class Vehicle{
     }
 
     this.display();
+  }
+}
+
+class TrafficLight{
+  constructor(x,y,state){
+    this.x = x;
+    this.y = y;
+    this.state = state;
+  }
+  display(){
+    fill(50);
+    rect(this.x - 10, this.y - 40, 20, 80);
+    fill(0);
+    ellipse(this.x, this.y - 20, 20, 20); // Red light
+    ellipse(this.x, this.y, 20, 20); // Amber light
+    ellipse(this.x, this.y + 20, 20, 20); // Green light
+    
+    if (this.state === 'red') {
+      fill(255, 0, 0);
+      ellipse(this.x, this.y - 20, 20, 20); // Red light on
+    } else if (this.state === 'green') {
+      fill(0, 255, 0);
+      ellipse(this.x, this.y + 20, 20, 20); // Green light on
+    } else if (this.state === 'amber') {
+      fill(255, 255, 0);
+      ellipse(this.x, this.y, 20, 20); // Amber light on
+    }
   }
 }
