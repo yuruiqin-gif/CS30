@@ -1,30 +1,33 @@
 // Puzzle Game
-// Yurui Qin
+// Yurui Qin.
 // CS30
-// June. 24, 2024
-// Creating a sailboat scene that can be altered with mouse and keyboard input
+// June. 23, 2024
+// Creating a 2D puzzel game that can be solved by fliping all the rectangles to the same color with mouse interactions.
 
-let flipState = 0 //if 0 then user flips with cross, if 1 then user flips with rectangle
+let flipState = 0 
 
+
+//info for our game's grid
 let NUM_ROWS = 4;
 let NUM_COLS = 5;
 let rectWidth, rectHeight;
 let currentRow, currentCol;
-let gridData = [[0,0,0,0,0],
+let gridData = [[0,0,0,0,0], 
                 [0,0,0,0,0],
                 [0,255,0,0,0],
                 [255,255,255,0,0]];
+
 let winMessage = "";
 
 
 function setup() {
-  document.addEventListener("contextmenu", event => event.preventDefault())
+  document.addEventListener("contextmenu", event => event.preventDefault()) //disables normal right mouse behavior
   // Determine the size of each square. Could use windowHeight,windowHeight  for Canvas to keep a square aspect ratio
   createCanvas(windowWidth, windowHeight);
   rectWidth = width/NUM_COLS;
   rectHeight = height/NUM_ROWS;
 
-  randomBoard();  
+  randomBoard();  //to Randomize the puzzle for each play
 }
 
 function draw() {
@@ -32,18 +35,19 @@ function draw() {
   determineActiveSquare();   //figure out which tile the mouse cursor is over
   drawGrid();                //render the current game board to the screen (and the overlay)
 
-  WinCondition();
-  if (winMessage !== "") {
+  WinCondition(); //checks if all rectangles have same color
+
+  if (winMessage !== "") { //displays message if player wins
     textSize(32);
     fill(255,0,0);
     text(winMessage, width / 2 - textWidth(winMessage) / 2, height / 2);
   }
 }
 
-function keyPressed(){
+function keyPressed(){ //if 0 then user flips with cross, if 1 then user flips with rectangle
   if (key === ' '){
     if (flipState === 0){
-      flipState = 1;
+      flipState = 1; 
     }
     else if (flipState === 1){
       flipState = 0;
@@ -53,22 +57,22 @@ function keyPressed(){
 
 function mousePressed(){
   if (mouseButton === LEFT && keyIsDown(SHIFT)) {
-    flip(currentCol, currentRow);
+    flip(currentCol, currentRow); //Only the rectangle that the mouse is over will flip with a left click and if shift is down
   } 
-  else if (mouseButton === LEFT && flipState === 0) {
+  else if (mouseButton === LEFT && flipState === 0) { //flipState is 0 so user flips with cross
     flip(currentCol, currentRow);
     flip(currentCol-1, currentRow);
     flip(currentCol+1, currentRow);
     flip(currentCol, currentRow-1);
     flip(currentCol, currentRow+1);
   }
-  else if (mouseButton === LEFT && flipState === 1) {
+  else if (mouseButton === LEFT && flipState === 1) { //flipState is 1 so user flips with 2 by 2 rectangle
     flip(currentCol, currentRow);
     flip(currentCol+1, currentRow);
     flip(currentCol, currentRow+1);
     flip(currentCol+1, currentRow+1);
   }
-  WinCondition();
+  WinCondition(); //checks if all rectangles have same color
 }
 
 function flip(col, row){
@@ -97,8 +101,8 @@ function drawGrid(){
     }
   }
 
-  if (flipState  === 0){
-    fill(100, 200, 100, 127); // Tint color with transparency
+  if (flipState  === 0){ //Show cross overlay if user if flipping with cross
+    fill(100, 200, 100, 127); //color with transparency
     rect(currentCol * rectWidth, currentRow * rectHeight, rectWidth, rectHeight);
     if (currentCol + 1 < NUM_COLS) {
       rect((currentCol + 1) * rectWidth, currentRow * rectHeight, rectWidth, rectHeight);
@@ -113,8 +117,8 @@ function drawGrid(){
       rect(currentCol * rectWidth, (currentRow - 1) * rectHeight, rectWidth, rectHeight);
     }
   }
-  else if (flipState  === 1){
-    fill(100, 200, 100, 127); // Tint color with transparency
+  else if (flipState  === 1){  //Show rectangle overlay if user if flipping with rectangle
+    fill(100, 200, 100, 127); //color with transparency
     rect(currentCol * rectWidth, currentRow * rectHeight, rectWidth, rectHeight);
     if (currentCol + 1 < NUM_COLS) {
       rect((currentCol + 1) * rectWidth, currentRow * rectHeight, rectWidth, rectHeight);
@@ -129,12 +133,13 @@ function drawGrid(){
 }
 
 function WinCondition(){
-  let identicalSquares = true;
+  let identicalSquares = true; 
 
-  let firstValue = gridData[0][0];
+  let firstValue = gridData[0][0]; 
+
   for (let x = 0; x < NUM_ROWS; x++){
     for (let y = 0; y < NUM_COLS; y++){
-      if(gridData[x][y] !== firstValue){
+      if(gridData[x][y] !== firstValue){//compares the following rectangles to the first rectangle, if they're not the same, then the loop exists
         identicalSquares = false;
         break;
       }
@@ -144,7 +149,7 @@ function WinCondition(){
     }
   }
 
-  if (identicalSquares) {
+  if (identicalSquares) { //if all rectangles have identical colors, then make a win message
     winMessage = "You Win!";
   } 
   else {
@@ -153,14 +158,14 @@ function WinCondition(){
 }
 
 function randomBoard(){
-  let randomNum;
+  let randomNum; //generate either a black of white rectangle
 
   for (let x = 0; x < NUM_ROWS; x++){
     for (let y = 0; y < NUM_COLS; y++){
-      if (floor(random(0,2)) == 0){
-        randomNum = 0;
+      if (floor(random(0,2)) === 0){ //picks number 0 or 1, if 0 then rectangle is black
+        randomNum = 0; 
       }
-      else{
+      else{ //picks number 0 or 1, if 1 then rectangle is white
         randomNum = 255;
       }
       gridData[x][y] = randomNum;
