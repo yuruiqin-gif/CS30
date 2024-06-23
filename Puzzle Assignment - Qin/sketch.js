@@ -1,4 +1,8 @@
-//Insert your Comment Header here.
+// Puzzle Game
+// Yurui Qin
+// CS30
+// June. 24, 2024
+// Creating a sailboat scene that can be altered with mouse and keyboard input
 
 let flipState = 0 //if 0 then user flips with cross, if 1 then user flips with rectangle
 
