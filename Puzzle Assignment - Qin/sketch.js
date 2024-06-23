@@ -1,5 +1,7 @@
 //Insert your Comment Header here.
 
+let flipState = 0 //if 0 then user flips with cross, if 1 then user flips with rectangle
+
 let NUM_ROWS = 4;
 let NUM_COLS = 5;
 let rectWidth, rectHeight;
@@ -17,7 +19,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   rectWidth = width/NUM_COLS;
   rectHeight = height/NUM_ROWS;
-  
+
+  randomBoard();  
 }
 
 function draw() {
@@ -28,22 +31,38 @@ function draw() {
   WinCondition();
   if (winMessage !== "") {
     textSize(32);
-    fill(0);
+    fill(255,0,0);
     text(winMessage, width / 2 - textWidth(winMessage) / 2, height / 2);
   }
 }
 
-
+function keyPressed(){
+  if (key === ' '){
+    if (flipState === 0){
+      flipState = 1;
+    }
+    else if (flipState === 1){
+      flipState = 0;
+    }
+  }
+}
 
 function mousePressed(){
   if (mouseButton === LEFT && keyIsDown(SHIFT)) {
     flip(currentCol, currentRow);
-  } else if (mouseButton === LEFT) {
+  } 
+  else if (mouseButton === LEFT && flipState === 0) {
     flip(currentCol, currentRow);
     flip(currentCol-1, currentRow);
     flip(currentCol+1, currentRow);
     flip(currentCol, currentRow-1);
     flip(currentCol, currentRow+1);
+  }
+  else if (mouseButton === LEFT && flipState === 1) {
+    flip(currentCol, currentRow);
+    flip(currentCol+1, currentRow);
+    flip(currentCol, currentRow+1);
+    flip(currentCol+1, currentRow+1);
   }
   WinCondition();
 }
@@ -73,6 +92,36 @@ function drawGrid(){
       rect(x*rectWidth, y*rectHeight, rectWidth, rectHeight);
     }
   }
+
+  if (flipState  === 0){
+    fill(100, 200, 100, 127); // Tint color with transparency
+    rect(currentCol * rectWidth, currentRow * rectHeight, rectWidth, rectHeight);
+    if (currentCol + 1 < NUM_COLS) {
+      rect((currentCol + 1) * rectWidth, currentRow * rectHeight, rectWidth, rectHeight);
+    }
+    if (currentCol - 1 >= 0) {
+      rect((currentCol - 1) * rectWidth, currentRow * rectHeight, rectWidth, rectHeight);
+    }
+    if (currentRow + 1 < NUM_ROWS) {
+      rect(currentCol * rectWidth, (currentRow + 1) * rectHeight, rectWidth, rectHeight);
+    }
+    if (currentRow - 1 >= 0) {
+      rect(currentCol * rectWidth, (currentRow - 1) * rectHeight, rectWidth, rectHeight);
+    }
+  }
+  else if (flipState  === 1){
+    fill(100, 200, 100, 127); // Tint color with transparency
+    rect(currentCol * rectWidth, currentRow * rectHeight, rectWidth, rectHeight);
+    if (currentCol + 1 < NUM_COLS) {
+      rect((currentCol + 1) * rectWidth, currentRow * rectHeight, rectWidth, rectHeight);
+    }
+    if (currentRow + 1 < NUM_ROWS) {
+      rect(currentCol * rectWidth, (currentRow + 1) * rectHeight, rectWidth, rectHeight);
+    }
+    if (currentCol + 1 < NUM_COLS && currentRow + 1 < NUM_ROWS) {
+      rect((currentCol + 1)  * rectWidth, (currentRow + 1) * rectHeight, rectWidth, rectHeight);
+    }
+  }
 }
 
 function WinCondition(){
@@ -96,5 +145,21 @@ function WinCondition(){
   } 
   else {
     winMessage = "";
+  }
+}
+
+function randomBoard(){
+  let randomNum;
+
+  for (let x = 0; x < NUM_ROWS; x++){
+    for (let y = 0; y < NUM_COLS; y++){
+      if (floor(random(0,2)) == 0){
+        randomNum = 0;
+      }
+      else{
+        randomNum = 255;
+      }
+      gridData[x][y] = randomNum;
+    }
   }
 }
