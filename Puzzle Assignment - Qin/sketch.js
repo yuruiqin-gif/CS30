@@ -8,7 +8,7 @@ let gridData = [[0,0,0,0,0],
                 [0,0,0,0,0],
                 [0,255,0,0,0],
                 [255,255,255,0,0]];
-
+let winMessage = "";
 
 
 function setup() {
@@ -24,21 +24,28 @@ function draw() {
   background(220);
   determineActiveSquare();   //figure out which tile the mouse cursor is over
   drawGrid();                //render the current game board to the screen (and the overlay)
-  //CHEATHER CHEATER
-  if(mouseButton === RIGHT && keyCode === SHIFT){
-      flip(currentCol,currentRow);
+
+  WinCondition();
+  if (winMessage !== "") {
+    textSize(32);
+    fill(0);
+    text(winMessage, width / 2 - textWidth(winMessage) / 2, height / 2);
   }
 }
 
 
 
 function mousePressed(){
-  // cross-shaped pattern flips on a mouseclick. Boundary conditions are checked within the flip function to ensure in-bounds access for array
-  flip(currentCol, currentRow);
-  flip(currentCol-1, currentRow);
-  flip(currentCol+1, currentRow);
-  flip(currentCol, currentRow-1);
-  flip(currentCol, currentRow+1);
+  if (mouseButton === LEFT && keyIsDown(SHIFT)) {
+    flip(currentCol, currentRow);
+  } else if (mouseButton === LEFT) {
+    flip(currentCol, currentRow);
+    flip(currentCol-1, currentRow);
+    flip(currentCol+1, currentRow);
+    flip(currentCol, currentRow-1);
+    flip(currentCol, currentRow+1);
+  }
+  WinCondition();
 }
 
 function flip(col, row){
@@ -69,20 +76,25 @@ function drawGrid(){
 }
 
 function WinCondition(){
-  let zeroCounter = 0;
-  let twoFiveFiveCounter = 0;
-  for (let y = 0; y < 5; y++){
-    for (let x = 0; x < 4; x++){
-      if(gridData[y][x] === 0){
-        zeroCounter+=1;
+  let identicalSquares = true;
+
+  let firstValue = gridData[0][0];
+  for (let x = 0; x < NUM_ROWS; x++){
+    for (let y = 0; y < NUM_COLS; y++){
+      if(gridData[x][y] !== firstValue){
+        identicalSquares = false;
+        break;
       }
-      if(gridData[y][x] === 255){
-        twoFiveFiveCounter+=1;
-      }
+    }
+    if(! identicalSquares){
+      break;
     }
   }
 
-  if(zeroCounter === 20 || twoFiveFiveCounter === 20){
-    print("You Win");
+  if (identicalSquares) {
+    winMessage = "You Win!";
+  } 
+  else {
+    winMessage = "";
   }
 }
