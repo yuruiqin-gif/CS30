@@ -10,16 +10,23 @@ let westbound = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  vehicles.push(new Vehicle(100, 250,0,'green', 0, 3));  // Car
-  vehicles.push(new Vehicle(300, 350,1,'yellow', 1,3));  // Truck/Van
+  for (let i = 0; i <= 20; i++){
+    eastbound.push(new Vehicle(0, random(windowHeight/3.9,windowHeight/2.5),floor(random(0,2)),'green', 1, 3)); 
+  }
+  for (let i = 0; i <= 20; i++){
+    westbound.push(new Vehicle(0, random(windowHeight/2,windowHeight/1.5),floor(random(0,2)),'green', 0, 3)); 
+  }
 }
 
 function draw() {
   background(255);
   drawRoad();
 
-  for(let V of vehicles){ //displaying vechicles
-    V.action();
+  for(let e of eastbound){ //displaying vechicles
+    e.action();
+  }
+  for(let w of westbound){ //displaying vechicles
+    w.action();
   }
 }
 
@@ -29,6 +36,19 @@ function drawRoad(){
   for(let x = 0; x < windowWidth; x += 80){
     fill(255);
     rect(x, (windowHeight/2)-10,50,10);
+  }
+}
+
+function mousePressed(){
+  if (mouseButton === LEFT) {
+    if (keyIsDown(SHIFT)) {
+      // Add westbound car
+      westbound.push(new Vehicle(mouseX, random(windowHeight/2,windowHeight/1.5),floor(random(0,2)),'green', 0, 3)); 
+    }
+    else{
+      // Add eastbound car
+      eastbound.push(new Vehicle(mouseX, random(windowHeight/3.9,windowHeight/2.5),floor(random(0,2)),'green', 1, 3)); 
+    }
   }
 }
 
@@ -64,18 +84,28 @@ class Vehicle{
   }
 
   showTruck(){
-    //for truck
     noStroke();
     fill(this.color);
-    rect(this.x, this.y, 60, 30);//body
-    //wheels
-    fill(255);
-    rect(this.x+5, this.y-2, 15, 2);
-    rect(this.x+5, this.y + 30, 15, 2);
-    rect(this.x+40, this.y-2, 15, 2);
-    rect(this.x+40, this.y + 30, 15, 2);
-
-    rect(this.x+60, this.y+5, 15, 20);
+    if(this.direction === 1){
+      rect(this.x, this.y, 60, 30);//body
+      rect(this.x+60, this.y+5, 15, 20);
+      //wheels
+      fill(255);
+      rect(this.x+5, this.y-2, 15, 2);
+      rect(this.x+5, this.y + 30, 15, 2);
+      rect(this.x+40, this.y-2, 15, 2);
+      rect(this.x+40, this.y + 30, 15, 2);
+    }
+    else{
+      rect(this.x, this.y, 60, 30);//body
+      rect(this.x-15, this.y+5, 15, 20);
+      //wheels
+      fill(255);
+      rect(this.x+5, this.y-2, 15, 2);
+      rect(this.x+5, this.y + 30, 15, 2);
+      rect(this.x+40, this.y-2, 15, 2);
+      rect(this.x+40, this.y + 30, 15, 2);
+    }
   }
 
   move(){
@@ -95,16 +125,22 @@ class Vehicle{
   }
 
   speedUp(){
-    if (this.direction === 1 && this.speed < 15) {
+    if (this.speed < 15) {
       this.speed += 0.5;
-    } else if (this.direction === 0 && this.speed > -15) {
-      this.speed -= 0.5;
     }
+    // if (this.direction === 1 && this.speed < 15) {
+    //   this.speed += 0.5;
+    // } else if (this.direction === 0 && this.speed > -15) {
+    //   this.speed -= 0.5;
+    // }
   }
 
   speedDown(){
     if (this.speed > 0.5) {
       this.speed -= 0.5;
+    }
+    if (this.speed === 0){
+      this.speed = 0.5; //so the car does not stop
     }
     // if (this.direction === 1 && this.speed > 0.5) {
     //   this.speed -= 0.5;
